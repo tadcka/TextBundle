@@ -1,0 +1,56 @@
+<?php
+
+/*
+ * Tadas Gliaubicas <tadcka89@gmail.com>, Github Tadcka.
+ * 13.11.29 15.57
+ */
+
+namespace Tadcka\TextBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="tadcka_texts")
+ */
+class Text
+{
+    /**
+     * @var int $id
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string $slug
+     *
+     * @ORM\Column(name="slug", type="string", length=255, nullable=false)
+     */
+    private $slug;
+
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection|TextTranslation[]
+     *
+     * @ORM\OneToMany(targetEntity="TextTranslation", mappedBy="entity", cascade={"persist", "remove"})
+     */
+    private $translations;
+
+    /**
+     * @var \Datetime $createAt
+     *
+     * @ORM\Column(name="create_at", type="datetime", nullable=false)
+     */
+    private $createAt;
+
+    /**
+     * @var \Datetime $updateAt
+     *
+     * @ORM\Column(name="update_at", type="datetime", nullable=false)
+     */
+    private $updateAt;
+
+    
+}

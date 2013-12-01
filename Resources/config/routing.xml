@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="tadcka_text_homepage" pattern="/texts">
+        <default key="_controller">TadckaTextBundle:Default:index</default>
+    </route>
+
+    <route id="tadcka_text_create" pattern="/text/create">
+        <default key="_controller">TadckaTextBundle:Default:create</default>
+    </route>
+
+    <route id="tadcka_text_edit" pattern="/text/edit/{id}">
+        <default key="_controller">TadckaTextBundle:Default:edit</default>
+    </route>
+</routes>
