@@ -1,8 +1,12 @@
 <?php
 
 /*
- * Tadas Gliaubicas <tadcka89@gmail.com>, Github Tadcka.
- * 13.11.29 15.59
+ * This file is part of the Tadcka package.
+ *
+ * (c) Tadcka <tadcka89@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Tadcka\TextBundle\Entity;
@@ -10,6 +14,10 @@ namespace Tadcka\TextBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @author Tadas Gliaubicas <tadcka89@gmail.com>
+ *
+ * @since 13.12.1 13.41
+ *
  * @ORM\Entity
  * @ORM\Table(name="tadcka_text_translations")
  */
