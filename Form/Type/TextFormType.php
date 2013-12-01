@@ -11,10 +11,11 @@
 
 namespace Tadcka\TextBundle\Form\Type;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Tadcka\TextBundle\Entity\TextTranslation;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -34,7 +35,12 @@ class TextFormType extends AbstractType
         ));
 
         $builder->add('translations', 'translations', array(
-            'type' => new TextTranslation(),
+            'type' => new TextTranslationFormType(),
+            'label' => false,
+        ));
+
+        $builder->add('submit', 'submit', array(
+            'label' => 'button.save'
         ));
     }
 
@@ -47,6 +53,7 @@ class TextFormType extends AbstractType
             array(
                 'data_class' => 'Tadcka\TextBundle\Entity\Text',
                 'translation_domain' => 'TadckaTextBundle',
+                'constraints' => array(new UniqueEntity(array('fields' => array('slug'), 'errorPath' => 'slug'))),
             )
         );
     }

@@ -11,6 +11,9 @@
 
 namespace Tadcka\TextBundle\Manager;
 
+use Symfony\Bridge\Doctrine\RegistryInterface;
+use Tadcka\TextBundle\Model\Text;
+
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
@@ -18,5 +21,35 @@ namespace Tadcka\TextBundle\Manager;
  */
 class TextManager
 {
+    /**
+     * @var RegistryInterface
+     */
+    private $doctrine;
 
+    /**
+     * Constructor.
+     *
+     * @param RegistryInterface $doctrine
+     */
+    public function __construct(RegistryInterface $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+
+    /**
+     * Get text by locale.
+     *
+     * @param string $key
+     * @param string $locale
+     *
+     * @return Text|null
+     */
+    public function getText($key, $locale = 'en')
+    {
+        if (null !== ($text = $this->doctrine->getRepository('TadckaTextBundle:Text')->getText($key, $locale))) {
+            return new Text($text['title'], $text['content']);
+        }
+
+        return null;
+    }
 }

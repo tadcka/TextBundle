@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @since 13.12.1 13.41
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Tadcka\TextBundle\Entity\Repository\TextRepository")
  * @ORM\Table(name="tadcka_texts")
  */
 class Text
@@ -35,7 +35,7 @@ class Text
     /**
      * @var string $slug
      *
-     * @ORM\Column(name="slug", type="string", length=255, nullable=false)
+     * @ORM\Column(name="slug", type="string", length=255, nullable=false, unique=true)
      */
     private $slug;
 

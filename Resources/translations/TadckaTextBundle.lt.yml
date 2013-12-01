@@ -1,0 +1,14 @@
+list:
+  title: Tekstai
+
+button:
+  create_text: Sukurti tekstą
+  save: Išsaugoti
+
+unique_key: Unikalus raktas
+title: Pavadinimas
+content: Turinys
+
+create:
+  title: Sukurti naują tekstą
+  success: Sėkmingai sukūrėte naują tekstą!

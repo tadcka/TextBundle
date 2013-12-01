@@ -14,6 +14,8 @@ namespace Tadcka\TextBundle\Form\Handler;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Tadcka\TextBundle\Entity\Text;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -22,22 +24,54 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class TextFormHandler
 {
+    /**
+     * @var Request
+     */
     private $request;
 
+    /**
+     * @var RegistryInterface
+     */
     private $doctrine;
 
-    public function __construct(Request $request, RegistryInterface $doctrine)
+    /**
+     * @var SessionInterface
+     */
+    private $session;
+
+    /**
+     * Constructor.
+     *
+     * @param Request $request
+     * @param RegistryInterface $doctrine
+     * @param SessionInterface $session
+     */
+    public function __construct(Request $request, RegistryInterface $doctrine, SessionInterface $session)
     {
         $this->request = $request;
         $this->doctrine = $doctrine;
+        $this->session = $session;
     }
 
+    /**
+     * Process.
+     *
+     * @param FormInterface $form
+     *
+     * @return bool
+     */
     public function process(FormInterface $form)
     {
         if (true === $this->request->isMethod('POST')) {
-            $form->submit($form);
+            $form->submit($this->request);
             if ($form->isValid()) {
+                /** @var Text $text */
+                $text = $form->getData();
 
+                $om = $this->doctrine->getManager();
+                if (false === $om->contains($text)) {
+                    $om->persist($text);
+                }
 
                 return true;
             }
@@ -46,8 +80,13 @@ class TextFormHandler
         return false;
     }
 
-    public function onSuccess()
+    /**
+     * On success.
+     *
+     * @param string $message
+     */
+    public function onSuccess($message)
     {
-
+        $this->session->getFlashBag()->set('flash_notices', array('success' => array($message)));
     }
 }

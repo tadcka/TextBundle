@@ -1,0 +1,10 @@
+{% extends 'TadckaTextBundle::layout.html.twig' %}
+
+{% trans_default_domain 'TadckaTextBundle' %}
+
+{% block main_content %}
+    <a class="btn btn-primary" href="{{ url('tadcka_text_create') }}">{{ 'button.create_text'|trans }}</a>
+    <div class="row-fluid text_container">
+
+    </div>
+{% endblock %}

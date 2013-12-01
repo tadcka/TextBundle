@@ -14,7 +14,6 @@ namespace Tadcka\TextBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -30,11 +29,12 @@ class TextTranslationFormType extends AbstractType
     {
         $builder->add('title', 'text', array(
             'label' => 'title',
-            'constraints' => array(new NotBlank()),
+            'required' => false,
         ));
 
         $builder->add('content', 'ckeditor', array(
             'label' => 'content',
+            'required' => false,
         ));
     }
 
@@ -47,7 +47,6 @@ class TextTranslationFormType extends AbstractType
             array(
                 'data_class' => 'Tadcka\TextBundle\Entity\TextTranslation',
                 'translation_domain' => 'TadckaTextBundle',
-                'label' => false,
             )
         );
     }

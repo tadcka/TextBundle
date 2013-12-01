@@ -1,0 +1,14 @@
+list:
+  title: Texts
+
+button:
+  create_text: Create text
+  save: Save
+
+unique_key: Unique key
+title: Title
+content: Content
+
+create:
+  title: Create new text
+  success: Successfully created a new text!
