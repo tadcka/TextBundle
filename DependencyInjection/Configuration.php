@@ -27,11 +27,29 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('tadcka_text');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $treeBuilder->root('tadcka_text')
+            ->children()
+
+                ->scalarNode('db_driver')->cannotBeOverwritten()->isRequired()->end()
+
+                ->arrayNode('class')->isRequired()
+
+                    ->children()
+                        ->arrayNode('model')->isRequired()
+
+                            ->children()
+                                ->scalarNode('text')->isRequired()->end()
+                                ->scalarNode('text_translation')->isRequired()->end()
+                            ->end()
+
+                        ->end()
+                    ->end()
+
+                ->end()
+
+            ->end()
+        ->end();
 
         return $treeBuilder;
     }

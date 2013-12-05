@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <mapped-superclass name="Tadcka\TextBundle\Entity\TextTranslation" table="tadcka_text_translation">
+
+        <field name="lang" column="lang" type="string" length="31" unique="true" nullable="false" />
+
+        <field name="title" column="title" type="string" length="255" nullable="false" />
+
+        <field name="content" column="content" type="text" nullable="true" />
+
+        <!--<many-to-one field="text" target-entity="Tadcka\TextBundle\Entity\Text" inversed-by="translations">
+            <join-column name="text_id" referenced-column-name="id" on-delete="CASCADE" nullable="false"/>
+        </many-to-one>-->
+
+    </mapped-superclass>
+
+</doctrine-mapping>

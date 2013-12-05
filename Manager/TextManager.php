@@ -12,7 +12,7 @@
 namespace Tadcka\TextBundle\Manager;
 
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Tadcka\TextBundle\Model\Text;
+use Tadcka\TextBundle\TextInfo;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -47,7 +47,7 @@ class TextManager
     public function getText($key, $locale = 'en')
     {
         if (null !== ($text = $this->doctrine->getRepository('TadckaTextBundle:Text')->getText($key, $locale))) {
-            return new Text($text['title'], $text['content']);
+            return new TextInfo($text['title'], $text['content']);
         }
 
         return null;
