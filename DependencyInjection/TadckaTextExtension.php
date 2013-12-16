@@ -39,7 +39,7 @@ class TadckaTextExtension extends Extension
         }
         $loader->load(sprintf('%s.xml', $config['db_driver']));
 
-        $container->setParameter('tadcka_text.model.text.class', $config['class']['model']['text']);
-        $container->setParameter('tadcka_text.model.text_translation.class', $config['class']['model']['text_translation']);
+        $container->setParameter('tadcka_text.text_class', $config['class']['model']['text']);
+        $container->setParameter('tadcka_text.text_translation_class', $config['class']['model']['text_translation']);
     }
 }

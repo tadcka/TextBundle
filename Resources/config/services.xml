@@ -5,17 +5,12 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="tadcka_text.manager.class">Tadcka\TextBundle\Manager\TextManager</parameter>
-        <parameter key="tadcka_text.administrator_manager.class">Tadcka\TextBundle\Manager\TextAdministratorManager</parameter>
+        <parameter key="tadcka_text.provider.class">Tadcka\TextBundle\Provider\Provider</parameter>
     </parameters>
 
     <services>
-        <service id="tadcka_text.manager" class="%tadcka_text.manager.class%">
-            <argument type="service" id="doctrine" />
-        </service>
-
-        <service id="tadcka_text.administrator_manager" class="%tadcka_text.administrator_manager.class%">
-            <argument type="service" id="doctrine" />
+        <service id="tadcka_text.provider" class="%tadcka_text.provider.class%">
+            <argument type="service" id="tadcka_text.manager.text_translation.default" />
         </service>
     </services>
 </container>
