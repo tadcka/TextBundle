@@ -107,11 +107,7 @@ abstract class Text implements TextInterface
     public function setUpdateAt($updateAt = null)
     {
         if (null === $updateAt) {
-            if ($this->updateAt instanceof \DateTime) {
-                $this->updateAt->modify('now');
-            } else {
-                $this->updateAt = new \DateTime();
-            }
+            $this->updateAt = new \DateTime();
         } else {
             $this->updateAt = $updateAt;
         }
