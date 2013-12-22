@@ -5,6 +5,6 @@
 {% block main_content %}
     <a class="btn btn-primary" href="{{ url('tadcka_text_create') }}">{{ 'button.create_text'|trans }}</a>
     <div class="row-fluid text_container">
-
+        {% include 'TadckaTextBundle:Default/List:content.html.twig' with {texts: texts} %}
     </div>
 {% endblock %}

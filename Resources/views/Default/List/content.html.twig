@@ -1,0 +1,8 @@
+
+<table class="table">
+{% for text in texts %}
+    <tr>
+        {% include 'TadckaTextBundle:Default/List:item.html.twig' with {text: text} %}
+    </tr>
+{% endfor %}
+</table>

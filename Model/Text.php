@@ -10,6 +10,7 @@
  */
 
 namespace Tadcka\TextBundle\Model;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -48,7 +49,7 @@ abstract class Text implements TextInterface
      */
     public function __construct()
     {
-        $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->translations = new ArrayCollection();
         $this->createAt = new \DateTime();
         $this->updateAt = $this->createAt;
     }
