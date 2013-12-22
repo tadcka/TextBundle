@@ -51,11 +51,11 @@ interface TextTranslationManagerInterface
     public function getCount($locale);
 
     /**
-     * Create text.
+     * Create text translation.
      *
      * @return TextTranslationInterface
      */
-    public function createText();
+    public function createTextTranslation();
 
     /**
      * Get class.

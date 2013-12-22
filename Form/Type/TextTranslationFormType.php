@@ -23,6 +23,21 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class TextTranslationFormType extends AbstractType
 {
     /**
+     * @var string
+     */
+    private $dataClass;
+
+    /**
+     * Constructor.
+     *
+     * @param string $dataClass
+     */
+    public function __construct($dataClass)
+    {
+        $this->dataClass = $dataClass;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -45,7 +60,7 @@ class TextTranslationFormType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Tadcka\TextBundle\Entity\TextTranslation',
+                'data_class' => $this->dataClass,
                 'translation_domain' => 'TadckaTextBundle',
             )
         );

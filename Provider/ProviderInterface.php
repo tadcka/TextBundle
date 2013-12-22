@@ -11,6 +11,8 @@
 
 namespace Tadcka\TextBundle\Provider;
 
+use Tadcka\TextBundle\Model\TextInterface;
+
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
@@ -27,4 +29,33 @@ interface ProviderInterface
      * @return null|array
      */
     public function getText($key, $locale);
+
+    /**
+     * Get text by id.
+     *
+     * @param int $id
+     *
+     * @return null|TextInterface
+     */
+    public function getTextById($id);
+
+    /**
+     * Get texts.
+     *
+     * @param string $locale
+     * @param null|int $offset
+     * @param null|int $limit
+     *
+     * @return array
+     */
+    public function getTexts($locale, $offset = null, $limit = null);
+
+    /**
+     * Get count.
+     *
+     * @param string $locale
+     *
+     * @return int
+     */
+    public function getCount($locale);
 }

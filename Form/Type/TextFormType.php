@@ -35,7 +35,7 @@ class TextFormType extends AbstractType
         ));
 
         $builder->add('translations', 'translations', array(
-            'type' => new TextTranslationFormType(),
+            'type' => new TextTranslationFormType($options['text_translation_class']),
             'label' => false,
         ));
 
@@ -51,9 +51,9 @@ class TextFormType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Tadcka\TextBundle\Entity\Text',
                 'translation_domain' => 'TadckaTextBundle',
                 'constraints' => array(new UniqueEntity(array('fields' => array('slug'), 'errorPath' => 'slug'))),
+                'text_translation_class' => null,
             )
         );
     }

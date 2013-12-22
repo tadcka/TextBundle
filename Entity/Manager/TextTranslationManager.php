@@ -16,7 +16,6 @@ use Tadcka\TextBundle\ModelManager\TextTranslationManager as BaseTextTranslation
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
-
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
@@ -40,23 +39,16 @@ class TextTranslationManager extends BaseTextTranslationManager
     protected $class;
 
     /**
-     * @var string
-     */
-    protected $metaClass;
-
-    /**
      * Constructor.
      *
      * @param EntityManager     $em
      * @param string            $class
-     * @param string            $metaClass
      */
-    public function __construct(EntityManager $em, $class, $metaClass)
+    public function __construct(EntityManager $em, $class)
     {
         $this->em         = $em;
         $this->repository = $em->getRepository($class);
         $this->class      = $em->getClassMetadata($class)->name;
-        $this->metaClass  = $em->getClassMetadata($metaClass)->name;
     }
 
     /**

@@ -16,30 +16,20 @@ use Tadcka\TextBundle\Model\TextInterface;
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
- * @since 13.12.17 00.43
+ * @since 13.12.22 23.23
  */
-interface TextManagerInterface
+abstract class TextManager implements TextManagerInterface
 {
-    /**
-     * Get text by id.
-     *
-     * @param int $id
-     *
-     * @return null|TextInterface
-     */
-    public function getText($id);
-
     /**
      * Create text.
      *
      * @return TextInterface
      */
-    public function createText();
+    public function createText()
+    {
+        $class = $this->getClass();
+        $text = new $class;
 
-    /**
-     * Get class.
-     *
-     * @return string
-     */
-    public function getClass();
+        return $text;
+    }
 }

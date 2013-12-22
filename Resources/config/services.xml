@@ -10,6 +10,7 @@
 
     <services>
         <service id="tadcka_text.provider" class="%tadcka_text.provider.class%">
+            <argument type="service" id="tadcka_text.manager.text.default" />
             <argument type="service" id="tadcka_text.manager.text_translation.default" />
         </service>
     </services>

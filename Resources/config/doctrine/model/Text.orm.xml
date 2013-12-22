@@ -4,7 +4,7 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                   http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <mapped-superclass name="Tadcka\TextBundle\Entity\Text" table="tadcka_text">
+    <mapped-superclass name="Tadcka\TextBundle\Model\Text" table="tadcka_text">
 
         <field name="slug" column="slug" type="string" length="255" unique="true" nullable="false" />
 

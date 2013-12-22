@@ -21,15 +21,15 @@ use Tadcka\TextBundle\Model\TextTranslationInterface;
 abstract class TextTranslationManager implements TextTranslationManagerInterface
 {
     /**
-     * Create text.
+     * Create text translation.
      *
      * @return TextTranslationInterface
      */
-    public function createText()
+    public function createTextTranslation()
     {
         $class = $this->getClass();
-        $text = new $class;
+        $textTranslation = new $class;
 
-        return $text;
+        return $textTranslation;
     }
 }

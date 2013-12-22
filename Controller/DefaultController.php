@@ -21,22 +21,21 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Tadcka\Component\Breadcrumbs\Breadcrumbs;
-use Tadcka\TextBundle\Entity\Text;
 use Tadcka\TextBundle\Form\Factory\TextFormFactory;
 use Tadcka\TextBundle\Form\Handler\TextFormHandler;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
- * @since 13.12.1 13.41
+ * @since  13.12.1 13.41
  */
 class DefaultController extends ContainerAware
 {
     /**
      * Renders a view.
      *
-     * @param string   $view       The view name
-     * @param array    $parameters An array of parameters to pass to the view
+     * @param string $view         The view name
+     * @param array $parameters    An array of parameters to pass to the view
      * @param Response $response   A response instance
      *
      * @return Response A Response instance
@@ -79,23 +78,38 @@ class DefaultController extends ContainerAware
     }
 
     /**
-     * @return \Tadcka\TextBundle\Manager\TextAdministratorManager
+     * @return \Tadcka\TextBundle\Provider\Provider
      */
-    private function getTextAdminstratorManager()
+    private function getProvider()
     {
-        return $this->container->get('tadcka_text.administrator_manager');
+        return $this->container->get('tadcka_text.provider');
+    }
+
+    /**
+     * Get text form factory.
+     *
+     * @return TextFormFactory
+     */
+    private function getTextFormFactory()
+    {
+        return new TextFormFactory(
+            $this->container->get('form.factory'),
+            $this->container->getParameter('tadcka_text.text_class'),
+            $this->container->getParameter('tadcka_text.text_translation_class')
+        );
     }
 
     public function indexAction(Request $request, $page = 1)
     {
         $limit = 30;
-        $manager = $this->getTextAdminstratorManager();
-        $paginator = new Paginator($manager->getCount($request->getLocale()), $page, $limit);
+
+        $count = $this->getProvider()->getCount($request->getLocale());
+        $paginator = new Paginator($count, $page, $limit);
         if ($page !== $paginator->page()) {
-            $paginator = new Paginator($manager->getCount($request->getLocale()), 1, $limit);
+            $paginator = new Paginator($count, 1, $limit);
         }
 
-        $texts = $manager->getTexts($request->getLocale(), $paginator->getOffset(), $paginator->getPerPage());
+        $texts = $this->getProvider()->getTexts($request->getLocale(), $paginator->getOffset(), $paginator->getPerPage());
 
         if (true === $request->isXmlHttpRequest()) {
             return $this->render(
@@ -124,10 +138,7 @@ class DefaultController extends ContainerAware
 
     public function createAction(Request $request)
     {
-        $formFactory = new TextFormFactory($this->container->get('form.factory'));
-        $text = new Text();
-        $form = $formFactory->create($text, $this->getRouter()->generate('tadcka_text_create'));
-
+        $form = $this->getTextFormFactory()->create($this->getRouter()->generate('tadcka_text_create'));
         $formHandler = new TextFormHandler($request, $this->getDoctrine(), $this->getSession());
 
         if (true === $formHandler->process($form)) {
@@ -157,16 +168,18 @@ class DefaultController extends ContainerAware
 
     public function editAction(Request $request, $id)
     {
-        $text = $this->getTextAdminstratorManager()->getTextById($id);
+        $text = $this->getProvider()->getTextById($id);
 
         if (null === $text) {
             throw new \LogicException('Not found text.');
         }
 
-        $formFactory = new TextFormFactory($this->container->get('form.factory'));
-        $form = $formFactory->create($text, $this->getRouter()->generate('tadcka_text_edit', array('id' => $id)));
-
+        $form = $this->getTextFormFactory()->create(
+            $this->getRouter()->generate('tadcka_text_edit', array('id' => $id)),
+            $text
+        );
         $formHandler = new TextFormHandler($request, $this->getDoctrine(), $this->getSession());
+
         if (true === $formHandler->process($form)) {
             $this->getDoctrine()->getManager()->flush();
             $formHandler->onSuccess($this->getTranslator()->trans('edit.success', array(), 'TadckaTextBundle'));
