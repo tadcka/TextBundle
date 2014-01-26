@@ -44,27 +44,27 @@ interface TextInterface
     public function getSlug();
 
     /**
-     * Get createAt.
+     * Get createdAt.
      *
      * @return \DateTime
      */
-    public function getCreateAt();
+    public function getCreatedAt();
 
     /**
-     * Set updateAt.
+     * Set updatedAt.
      *
-     * @param \DateTime|null $updateAt
+     * @param \DateTime|null $updatedAt
      *
      * @return TextInterface
      */
-    public function setUpdateAt(\DateTime $updateAt = null);
+    public function setUpdatedAt(\DateTime $updatedAt = null);
 
     /**
-     * Get updateAt.
+     * Get updatedAt.
      *
      * @return \DateTime
      */
-    public function getUpdateAt();
+    public function getUpdatedAt();
 
     /**
      * Add translations.

@@ -36,20 +36,20 @@ abstract class Text implements TextInterface
     /**
      * @var \DateTime
      */
-    protected $createAt;
+    protected $createdAt;
 
     /**
      * @var \DateTime
      */
-    protected $updateAt;
+    protected $updatedAt;
 
     /**
      * Constructor.
      */
     public function __construct()
     {
-        $this->createAt = new \DateTime();
-        $this->updateAt = $this->createAt;
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = $this->createdAt;
     }
 
     /**
@@ -81,20 +81,20 @@ abstract class Text implements TextInterface
     /**
      * {@inheritdoc}
      */
-    public function getCreateAt()
+    public function getCreatedAt()
     {
-        return $this->createAt;
+        return $this->createdAt;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setUpdateAt(\Datetime $updateAt = null)
+    public function setUpdatedAt(\Datetime $updatedAt = null)
     {
-        if (null === $updateAt) {
-            $this->updateAt = new \DateTime();
+        if (null === $updatedAt) {
+            $this->updatedAt = new \DateTime();
         } else {
-            $this->updateAt = $updateAt;
+            $this->updatedAt = $updatedAt;
         }
 
         return $this;
@@ -103,8 +103,8 @@ abstract class Text implements TextInterface
     /**
      * {@inheritdoc}
      */
-    public function getUpdateAt()
+    public function getUpdatedAt()
     {
-        return $this->updateAt;
+        return $this->updatedAt;
     }
 }
