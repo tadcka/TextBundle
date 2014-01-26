@@ -11,6 +11,8 @@
 
 namespace Tadcka\TextBundle\Model;
 
+use Tadcka\TextBundle\Model\TextTranslationInterface;
+
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
@@ -19,71 +21,78 @@ namespace Tadcka\TextBundle\Model;
 interface TextInterface
 {
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
     public function getId();
 
     /**
-     * Set slug
+     * Set slug.
      *
      * @param string $slug
      *
-     * @return Text
+     * @return TextInterface
      */
     public function setSlug($slug);
 
     /**
-     * Get slug
+     * Get slug.
      *
      * @return string
      */
     public function getSlug();
 
     /**
-     * Get createAt
+     * Get createAt.
      *
      * @return \DateTime
      */
     public function getCreateAt();
 
     /**
-     * Set updateAt
+     * Set updateAt.
      *
      * @param \DateTime|null $updateAt
      *
-     * @return Text
+     * @return TextInterface
      */
-    public function setUpdateAt($updateAt = null);
+    public function setUpdateAt(\DateTime $updateAt = null);
 
     /**
-     * Get updateAt
+     * Get updateAt.
      *
      * @return \DateTime
      */
     public function getUpdateAt();
 
     /**
-     * Add translations
+     * Add translations.
      *
-     * @param TextTranslationInterface $translations
-     *
-     * @return Text
+     * @param TextTranslationInterface $translation
      */
-    public function addTranslation(TextTranslationInterface $translations);
+    public function addTranslation(TextTranslationInterface $translation);
 
     /**
-     * Remove translations
+     * Remove translations.
      *
-     * @param TextTranslationInterface $translations
+     * @param TextTranslationInterface $translation
      */
-    public function removeTranslation(TextTranslationInterface$translations);
+    public function removeTranslation(TextTranslationInterface $translation);
 
     /**
-     * Get translations
+     * Get translations.
      *
-     * @return \Doctrine\Common\Collections\Collection|TextTranslationInterface[]
+     * @return array
      */
     public function getTranslations();
+
+    /**
+     * Set translations.
+     *
+     * @param array $translations
+     *
+     * @return TextInterface
+     */
+    public function setTranslations(array $translations);
 }

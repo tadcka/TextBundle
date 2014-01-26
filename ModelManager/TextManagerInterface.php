@@ -21,13 +21,34 @@ use Tadcka\TextBundle\Model\TextInterface;
 interface TextManagerInterface
 {
     /**
-     * Get text by id.
+     * Get text by locale.
      *
-     * @param int $id
+     * @param string $slug
+     * @param string $locale
      *
-     * @return null|TextInterface
+     * @return null|array
      */
-    public function getText($id);
+    public function getText($slug, $locale);
+
+    /**
+     * Get texts.
+     *
+     * @param string $locale
+     * @param null|int $offset
+     * @param null|int $limit
+     *
+     * @return array
+     */
+    public function getTexts($locale, $offset = null, $limit = null);
+
+    /**
+     * Get count.
+     *
+     * @param string $locale
+     *
+     * @return int
+     */
+    public function getAllTextCount($locale);
 
     /**
      * Create text.
@@ -37,7 +58,28 @@ interface TextManagerInterface
     public function createText();
 
     /**
-     * Get class.
+     * Save text.
+     *
+     * @param TextInterface $text
+     * @param bool $flush
+     */
+    public function saveText(TextInterface $text, $flush = false);
+
+    /**
+     * Delete text.
+     *
+     * @param TextInterface $text
+     * @param bool $flush
+     */
+    public function deleteText(TextInterface $text, $flush = false);
+
+    /**
+     * Save.
+     */
+    public function save();
+
+    /**
+     * Get class text model.
      *
      * @return string
      */

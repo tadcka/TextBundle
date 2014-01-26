@@ -10,7 +10,6 @@
  */
 
 namespace Tadcka\TextBundle\Model;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -30,9 +29,9 @@ abstract class Text implements TextInterface
     protected $slug;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection|TextTranslation[]
+     * @var array
      */
-    protected $translations;
+    protected $translations = array();
 
     /**
      * @var \DateTime
@@ -49,15 +48,12 @@ abstract class Text implements TextInterface
      */
     public function __construct()
     {
-        $this->translations = new ArrayCollection();
         $this->createAt = new \DateTime();
         $this->updateAt = $this->createAt;
     }
 
     /**
-     * Get id
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function getId()
     {
@@ -65,11 +61,7 @@ abstract class Text implements TextInterface
     }
 
     /**
-     * Set slug
-     *
-     * @param string $slug
-     *
-     * @return Text
+     * {@inheritdoc}
      */
     public function setSlug($slug)
     {
@@ -79,9 +71,7 @@ abstract class Text implements TextInterface
     }
 
     /**
-     * Get slug
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getSlug()
     {
@@ -89,9 +79,7 @@ abstract class Text implements TextInterface
     }
 
     /**
-     * Get createAt
-     *
-     * @return \DateTime
+     * {@inheritdoc}
      */
     public function getCreateAt()
     {
@@ -99,13 +87,9 @@ abstract class Text implements TextInterface
     }
 
     /**
-     * Set updateAt
-     *
-     * @param \DateTime|null $updateAt
-     *
-     * @return Text
+     * {@inheritdoc}
      */
-    public function setUpdateAt($updateAt = null)
+    public function setUpdateAt(\Datetime $updateAt = null)
     {
         if (null === $updateAt) {
             $this->updateAt = new \DateTime();
@@ -117,46 +101,10 @@ abstract class Text implements TextInterface
     }
 
     /**
-     * Get updateAt
-     *
-     * @return \DateTime
+     * {@inheritdoc}
      */
     public function getUpdateAt()
     {
         return $this->updateAt;
-    }
-
-    /**
-     * Add translations
-     *
-     * @param TextTranslationInterface $translations
-     *
-     * @return Text
-     */
-    public function addTranslation(TextTranslationInterface $translations)
-    {
-        $this->translations[] = $translations;
-
-        return $this;
-    }
-
-    /**
-     * Remove translations
-     *
-     * @param TextTranslationInterface $translations
-     */
-    public function removeTranslation(TextTranslationInterface $translations)
-    {
-        $this->translations->removeElement($translations);
-    }
-
-    /**
-     * Get translations
-     *
-     * @return \Doctrine\Common\Collections\Collection|TextTranslationInterface[]
-     */
-    public function getTranslations()
-    {
-        return $this->translations;
     }
 }

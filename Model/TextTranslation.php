@@ -44,9 +44,7 @@ abstract class TextTranslation implements TextTranslationInterface
     protected $content;
 
     /**
-     * Get id.
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function getId()
     {
@@ -54,11 +52,7 @@ abstract class TextTranslation implements TextTranslationInterface
     }
 
     /**
-     * Set lang.
-     *
-     * @param string $lang
-     *
-     * @return TextTranslationInterface
+     * {@inheritdoc}
      */
     public function setLang($lang)
     {
@@ -68,9 +62,7 @@ abstract class TextTranslation implements TextTranslationInterface
     }
 
     /**
-     * Get lang.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getLang()
     {
@@ -78,11 +70,7 @@ abstract class TextTranslation implements TextTranslationInterface
     }
 
     /**
-     * Set text.
-     *
-     * @param \Tadcka\TextBundle\Model\TextInterface $text
-     *
-     * @return TextTranslationInterface
+     * {@inheritdoc}
      */
     public function setText(TextInterface $text)
     {
@@ -92,9 +80,7 @@ abstract class TextTranslation implements TextTranslationInterface
     }
 
     /**
-     * Get text.
-     *
-     * @return \Tadcka\TextBundle\Model\TextInterface
+     * {@inheritdoc}
      */
     public function getText()
     {
@@ -102,11 +88,7 @@ abstract class TextTranslation implements TextTranslationInterface
     }
 
     /**
-     * Set title.
-     *
-     * @param string $title
-     *
-     * @return TextTranslationInterface
+     * {@inheritdoc}
      */
     public function setTitle($title)
     {
@@ -116,9 +98,7 @@ abstract class TextTranslation implements TextTranslationInterface
     }
 
     /**
-     * Get title.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getTitle()
     {
@@ -126,11 +106,7 @@ abstract class TextTranslation implements TextTranslationInterface
     }
 
     /**
-     * Set content.
-     *
-     * @param string $content
-     *
-     * @return TextTranslationInterface
+     * {@inheritdoc}
      */
     public function setContent($content)
     {
@@ -140,9 +116,7 @@ abstract class TextTranslation implements TextTranslationInterface
     }
 
     /**
-     * Get content.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getContent()
     {

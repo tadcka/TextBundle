@@ -21,36 +21,6 @@ use Tadcka\TextBundle\Model\TextTranslationInterface;
 interface TextTranslationManagerInterface
 {
     /**
-     * Get text by locale.
-     *
-     * @param string $key
-     * @param string $locale
-     *
-     * @return null|array
-     */
-    public function getText($key, $locale);
-
-    /**
-     * Get texts.
-     *
-     * @param string $locale
-     * @param null|int $offset
-     * @param null|int $limit
-     *
-     * @return array
-     */
-    public function getTexts($locale, $offset = null, $limit = null);
-
-    /**
-     * Get count.
-     *
-     * @param string $locale
-     *
-     * @return int
-     */
-    public function getCount($locale);
-
-    /**
      * Create text translation.
      *
      * @return TextTranslationInterface
@@ -58,7 +28,28 @@ interface TextTranslationManagerInterface
     public function createTextTranslation();
 
     /**
-     * Get class.
+     * Save text translation.
+     *
+     * @param TextTranslationInterface $textTranslation
+     * @param bool $flush
+     */
+    public function saveTextTranslation(TextTranslationInterface $textTranslation, $flush = false);
+
+    /**
+     * Delete text translation.
+     *
+     * @param TextTranslationInterface $textTranslation
+     * @param bool $flush
+     */
+    public function deleteTextTranslation(TextTranslationInterface $textTranslation, $flush = false);
+
+    /**
+     * Save.
+     */
+    public function save();
+
+    /**
+     * Get class text translation model.
      *
      * @return string
      */

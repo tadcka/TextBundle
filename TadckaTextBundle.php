@@ -22,6 +22,9 @@ use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappi
  */
 class TadckaTextBundle extends Bundle
 {
+    /**
+     * {@inheritdoc}
+     */
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
@@ -30,6 +33,8 @@ class TadckaTextBundle extends Bundle
     }
 
     /**
+     * Add register mappings pass.
+     *
      * @param ContainerBuilder $container
      */
     private function addRegisterMappingsPass(ContainerBuilder $container)
@@ -38,6 +43,9 @@ class TadckaTextBundle extends Bundle
             realpath(__DIR__ . '/Resources/config/doctrine/model') => 'Tadcka\TextBundle\Model',
         );
 
-        $container->addCompilerPass(DoctrineOrmMappingsPass::createXmlMappingDriver($mappings));
+        $ormCompilerClass = 'Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass';
+        if (class_exists($ormCompilerClass)) {
+            $container->addCompilerPass(DoctrineOrmMappingsPass::createXmlMappingDriver($mappings));
+        }
     }
 }
