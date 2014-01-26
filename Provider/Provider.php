@@ -45,19 +45,6 @@ class Provider implements ProviderInterface
     }
 
     /**
-     * Get text by locale.
-     *
-     * @param string $key
-     * @param string $locale
-     *
-     * @return null|array
-     */
-    public function getText($key, $locale)
-    {
-        return $this->textTranslationManager->getText($key, $locale);
-    }
-
-    /**
      * Get texts.
      *
      * @param string $locale
@@ -68,7 +55,7 @@ class Provider implements ProviderInterface
      */
     public function getTexts($locale, $offset = null, $limit = null)
     {
-        return $this->textTranslationManager->getTexts($locale, $offset, $limit);
+        return $this->textManager->getTexts($locale, $offset, $limit);
     }
 
     /**
@@ -80,18 +67,51 @@ class Provider implements ProviderInterface
      */
     public function getCount($locale)
     {
-        return $this->textTranslationManager->getCount($locale);
+        return $this->textManager->getAllTextCount($locale);
     }
 
     /**
      * Get text by id.
      *
+     * @param string $slug
+     * @param string $locale
+     *
+     * @return null|TextInterface
+     */
+    public function getText($slug, $locale)
+    {
+        return $this->textManager->getText($slug, $locale);
+    }
+
+    /**
+     * Find text by id.
+     *
      * @param int $id
      *
      * @return null|TextInterface
      */
-    public function getTextById($id)
+    public function findText($id)
     {
-        return $this->textManager->getText($id);
+        // TODO: Implement findText() method.
+    }
+
+    /**
+     * Save text.
+     *
+     * @param TextInterface $text
+     */
+    public function saveText(TextInterface $text)
+    {
+        $this->textManager->saveText($text, true);
+    }
+
+    /**
+     * Delete text.
+     *
+     * @param TextInterface $text
+     */
+    public function deleteText(TextInterface $text)
+    {
+        $this->textManager->deleteText($text, true);
     }
 }

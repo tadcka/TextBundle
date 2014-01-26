@@ -21,6 +21,29 @@ use Tadcka\TextBundle\Model\TextInterface;
 interface ProviderInterface
 {
     /**
+     * Find text by id.
+     *
+     * @param int $id
+     *
+     * @return null|TextInterface
+     */
+    public function findText($id);
+
+    /**
+     * Save text.
+     *
+     * @param TextInterface $text
+     */
+    public function saveText(TextInterface $text);
+
+    /**
+     * Delete text.
+     *
+     * @param TextInterface $text
+     */
+    public function deleteText(TextInterface $text);
+
+    /**
      * Get text by locale.
      *
      * @param string $key
@@ -29,15 +52,6 @@ interface ProviderInterface
      * @return null|array
      */
     public function getText($key, $locale);
-
-    /**
-     * Get text by id.
-     *
-     * @param int $id
-     *
-     * @return null|TextInterface
-     */
-    public function getTextById($id);
 
     /**
      * Get texts.

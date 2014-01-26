@@ -11,8 +11,6 @@
 
 namespace Tadcka\TextBundle\Controller;
 
-use Animals\Component\Paginator\Paginator;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +19,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Tadcka\Component\Breadcrumbs\Breadcrumbs;
+use Tadcka\Component\Paginator\Pagination;
 use Tadcka\TextBundle\Form\Factory\TextFormFactory;
 use Tadcka\TextBundle\Form\Handler\TextFormHandler;
 
@@ -62,14 +61,6 @@ class DefaultController extends ContainerAware
     }
 
     /**
-     * @return RegistryInterface
-     */
-    private function getDoctrine()
-    {
-        return $this->container->get('doctrine');
-    }
-
-    /**
      * @return SessionInterface
      */
     private function getSession()
@@ -104,18 +95,23 @@ class DefaultController extends ContainerAware
         $limit = 30;
 
         $count = $this->getProvider()->getCount($request->getLocale());
-        $paginator = new Paginator($count, $page, $limit);
-        if ($page !== $paginator->page()) {
-            $paginator = new Paginator($count, 1, $limit);
+        $pagination = new Pagination($count, $page, $limit);
+        if ($page !== $pagination->getCurrentPage()) {
+            $pagination = new Pagination($count, 1, $limit);
         }
 
-        $texts = $this->getProvider()->getTexts($request->getLocale(), $paginator->getOffset(), $paginator->getPerPage());
+        $texts = $this->getProvider()->getTexts(
+            $request->getLocale(),
+            $pagination->getOffset(),
+            $pagination->getItemsPerPage()
+        );
+        var_dump($texts); die;
 
         if (true === $request->isXmlHttpRequest()) {
             return $this->render(
                 'TadckaTextBundle:Default/List:content.html.twig',
                 array(
-                    'pages' => $paginator,
+                    'pages' => $this->container->get('tadcka_paginator.manager')->getPaginatorHtml($pagination),
                     'texts' => $texts,
                 )
             );
@@ -130,7 +126,7 @@ class DefaultController extends ContainerAware
             array(
                 'title' => $title,
                 'breadcrumbs' => $breadcrumbs,
-                'pages' => $paginator,
+                'pages' => $this->container->get('tadcka_paginator.manager')->getPaginatorHtml($pagination),
                 'texts' => $texts,
             )
         );
@@ -139,10 +135,10 @@ class DefaultController extends ContainerAware
     public function createAction(Request $request)
     {
         $form = $this->getTextFormFactory()->create($this->getRouter()->generate('tadcka_text_create'));
-        $formHandler = new TextFormHandler($request, $this->getDoctrine(), $this->getSession());
+        $formHandler = new TextFormHandler($request, $this->getSession());
 
-        if (true === $formHandler->process($form)) {
-            $this->getDoctrine()->getManager()->flush();
+        if (false !== ($text = $formHandler->process($form))) {
+            $this->getProvider()->saveText($text);
             $formHandler->onSuccess($this->getTranslator()->trans('create.success', array(), 'TadckaTextBundle'));
 
             return new RedirectResponse($this->getRouter()->generate('tadcka_text_homepage'));

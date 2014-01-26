@@ -60,7 +60,7 @@ class TextManager extends BaseTextManager
     {
         $qb = $this->repository->createQueryBuilder('text');
 
-        $qb->innerJoin('text.translations', 'translation', Join::WITH, $qb->expr()->eq('translation.locale', 'locale'))
+        $qb->innerJoin('text.translations', 'translation', Join::WITH, $qb->expr()->eq('translation.lang', ':locale'))
             ->setParameter('locale', $locale);
 
         $qb->andWhere($qb->expr()->eq('text.slug', 'slug'))
@@ -78,7 +78,7 @@ class TextManager extends BaseTextManager
     {
         $qb = $this->repository->createQueryBuilder('text');
 
-        $qb->innerJoin('text.translations', 'translation', Join::WITH, $qb->expr()->eq('translation.locale', 'locale'))
+        $qb->innerJoin('text.translations', 'translation', Join::WITH, $qb->expr()->eq('translation.lang', ':locale'))
             ->setParameter('locale', $locale);
 
         if (null !== $offset) {
@@ -101,7 +101,7 @@ class TextManager extends BaseTextManager
     {
         $qb = $this->repository->createQueryBuilder('text');
 
-        $qb->innerJoin('text.translations', 'translation', Join::WITH, $qb->expr()->eq('translation.locale', 'locale'))
+        $qb->innerJoin('text.translations', 'translation', Join::WITH, $qb->expr()->eq('translation.lang', ':locale'))
             ->setParameter('locale', $locale);
 
         $qb->select('COUNT(text)');
@@ -117,7 +117,7 @@ class TextManager extends BaseTextManager
         $this->em->persist($text);
 
         if (true === $flush) {
-            $this->em->persist($text);
+            $this->em->flush();
         }
     }
 
@@ -129,7 +129,7 @@ class TextManager extends BaseTextManager
         $this->em->remove($text);
 
         if (true === $flush) {
-            $this->em->persist($text);
+            $this->em->flush();
         }
     }
 
