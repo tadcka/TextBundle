@@ -22,6 +22,9 @@
         "nercury/translation-editor-bundle": "0.1.x-dev",
         "Trsteel/ckeditor-bundle": ">=v1.2.0"
     },
+    "require-dev": {
+        "doctrine/doctrine-bundle": "*"
+    },
     "autoload": {
         "psr-4": {
             "Tadcka\\TextBundle\\": ""
