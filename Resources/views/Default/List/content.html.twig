@@ -1,8 +1,13 @@
+{% trans_default_domain 'TadckaTextBundle' %}
 
 <table class="table">
-{% for text in texts %}
     <tr>
-        {% include 'TadckaTextBundle:Default/List:item.html.twig' with {text: text} %}
+        <th>{{ 'unique_key'|trans }}</th>
+        <th>{{ 'title'|trans }}</th>
     </tr>
-{% endfor %}
+    {% for text in texts %}
+        <tr>
+            {% include 'TadckaTextBundle:Default/List:item.html.twig' with {text: text} %}
+        </tr>
+    {% endfor %}
 </table>

@@ -20,7 +20,7 @@ use Tadcka\TextBundle\ModelManager\TextTranslationManagerInterface;
  *
  * @since  13.12.17 01.29
  */
-class Provider implements ProviderInterface
+class TextProvider implements TextProviderInterface
 {
     /**
      * @var TextTranslationManagerInterface
@@ -36,7 +36,7 @@ class Provider implements ProviderInterface
      * Constructor.
      *
      * @param TextManagerInterface $textManager
-     * @param \Tadcka\TextBundle\ModelManager\TextTranslationManagerInterface $textTranslationManager
+     * @param TextTranslationManagerInterface $textTranslationManager
      */
     public function __construct(TextManagerInterface $textManager, TextTranslationManagerInterface $textTranslationManager)
     {
@@ -45,13 +45,7 @@ class Provider implements ProviderInterface
     }
 
     /**
-     * Get texts.
-     *
-     * @param string $locale
-     * @param null|int $offset
-     * @param null|int $limit
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getTexts($locale, $offset = null, $limit = null)
     {
@@ -59,11 +53,7 @@ class Provider implements ProviderInterface
     }
 
     /**
-     * Get count.
-     *
-     * @param string $locale
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function getCount($locale)
     {
@@ -71,12 +61,7 @@ class Provider implements ProviderInterface
     }
 
     /**
-     * Get text by id.
-     *
-     * @param string $slug
-     * @param string $locale
-     *
-     * @return null|TextInterface
+     * {@inheritdoc}
      */
     public function getText($slug, $locale)
     {
@@ -84,21 +69,15 @@ class Provider implements ProviderInterface
     }
 
     /**
-     * Find text by id.
-     *
-     * @param int $id
-     *
-     * @return null|TextInterface
+     * {@inheritdoc}
      */
     public function findText($id)
     {
-        // TODO: Implement findText() method.
+        return $this->textManager->findText($id);
     }
 
     /**
-     * Save text.
-     *
-     * @param TextInterface $text
+     * {@inheritdoc}
      */
     public function saveText(TextInterface $text)
     {
@@ -106,12 +85,34 @@ class Provider implements ProviderInterface
     }
 
     /**
-     * Delete text.
-     *
-     * @param TextInterface $text
+     * {@inheritdoc}
      */
     public function deleteText(TextInterface $text)
     {
         $this->textManager->deleteText($text, true);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createText()
+    {
+        return $this->textManager->createText();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTextClass()
+    {
+        return $this->textManager->getClass();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTextTranslationClass()
+    {
+        return $this->textTranslationManager->getClass();
     }
 }

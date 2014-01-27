@@ -1,0 +1,13 @@
+{% extends 'TadckaTextBundle::layout.html.twig' %}
+
+{% trans_default_domain 'TadckaTextBundle' %}
+
+{% block main_content %}
+    <div class="row-fluid text_container">
+        {{ 'remove.question'|trans({'%slug%': text.getSlug()}) }}
+        <form action="{{ url('tadcka_text_delete', {id: text.getId()}) }}" method="post">
+            <button type="submit" class="btn btn-danger">{{ 'button.remove'|trans }}</button>
+            <a class="btn" href="{{ url('tadcka_text_homepage') }}">{{ 'button.cancel'|trans }}</a>
+        </form>
+    </div>
+{% endblock %}

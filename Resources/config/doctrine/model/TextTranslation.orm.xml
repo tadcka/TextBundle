@@ -16,7 +16,11 @@
 
     <mapped-superclass name="Tadcka\TextBundle\Model\TextTranslation" table="tadcka_text_translation">
 
-        <field name="lang" column="lang" type="string" length="31" unique="true" nullable="false" />
+        <!--<unique-constraints>-->
+            <!--<unique-constraint columns="text_id,lang" name="unique_lang_idx" />-->
+        <!--</unique-constraints>-->
+
+        <field name="lang" column="lang" type="string" length="31" nullable="false" />
 
         <field name="title" column="title" type="string" length="255" nullable="false" />
 

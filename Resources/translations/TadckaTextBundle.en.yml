@@ -4,6 +4,8 @@ list:
 button:
   create_text: Create text
   save: Save
+  remove: Remove
+  cancel: Candel
 
 unique_key: Unique key
 title: Title
@@ -12,3 +14,12 @@ content: Content
 create:
   title: Create new text
   success: Successfully created a new text!
+
+edit:
+ title: Edit text
+ success: Successfully edited the text!
+
+remove:
+  title: Remove text
+  success: Successfully removed text!
+  question: Are you sure you want to remove the text: %slug%?

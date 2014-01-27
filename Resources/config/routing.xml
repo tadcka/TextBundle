@@ -24,4 +24,9 @@
     <route id="tadcka_text_edit" pattern="/text/edit/{id}">
         <default key="_controller">TadckaTextBundle:Default:edit</default>
     </route>
+
+    <route id="tadcka_text_delete" pattern="/text/delete/{id}">
+        <default key="_controller">TadckaTextBundle:Default:delete</default>
+    </route>
+
 </routes>

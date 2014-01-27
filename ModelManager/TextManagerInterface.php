@@ -21,6 +21,15 @@ use Tadcka\TextBundle\Model\TextInterface;
 interface TextManagerInterface
 {
     /**
+     * Find text by id.
+     *
+     * @param int $id
+     *
+     * @return null|TextInterface
+     */
+    public function findText($id);
+
+    /**
      * Get text by locale.
      *
      * @param string $slug

@@ -1,0 +1,7 @@
+{% extends 'TadckaTextBundle::layout.html.twig' %}
+
+{% block main_content %}
+    <div class="row-fluid text_container">
+        {% include 'TadckaTextBundle:Default/Form:text.html.twig' with {form: form} %}
+    </div>
+{% endblock %}

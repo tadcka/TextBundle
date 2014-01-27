@@ -1,11 +1,7 @@
 {% extends 'TadckaTextBundle::layout.html.twig' %}
 
-{% trans_default_domain 'TadckaTextBundle' %}
-
 {% block main_content %}
     <div class="row-fluid text_container">
-        {{ form_start(form) }}
-        {{ form_rest(form) }}
-        {{ form_end(form) }}
+        {% include 'TadckaTextBundle:Default/Form:text.html.twig' with {form: form} %}
     </div>
 {% endblock %}

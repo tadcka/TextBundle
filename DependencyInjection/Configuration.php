@@ -30,24 +30,17 @@ class Configuration implements ConfigurationInterface
 
         $treeBuilder->root('tadcka_text')
             ->children()
-
                 ->scalarNode('db_driver')->cannotBeOverwritten()->isRequired()->end()
-
                 ->arrayNode('class')->isRequired()
-
                     ->children()
                         ->arrayNode('model')->isRequired()
-
                             ->children()
                                 ->scalarNode('text')->isRequired()->end()
                                 ->scalarNode('text_translation')->isRequired()->end()
                             ->end()
-
                         ->end()
                     ->end()
-
                 ->end()
-
             ->end()
         ->end();
 

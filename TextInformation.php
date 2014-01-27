@@ -16,7 +16,7 @@ namespace Tadcka\TextBundle;
  *
  * @since 13.12.1 18.13
  */
-class TextInfo
+class TextInformation
 {
     /**
      * @var string

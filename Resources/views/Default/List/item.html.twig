@@ -1,1 +1,11 @@
+{% trans_default_domain 'TadckaTextBundle' %}
+
 <td>{{ text.getSlug() }}</td>
+
+{% set translation = text.getTranslation(app.request.locale) %}
+
+<td>{{ translation is not empty ? translation.getTitle() : '' }}</td>
+<td>
+    <a class="btn" href="{{ url('tadcka_text_edit', {id: text.getId()}) }}">{{ 'edit.title'|trans }}</a>
+    <a class="btn btn-danger" href="{{ url('tadcka_text_delete', {id: text.getId()}) }}">{{ 'remove.title'|trans }}</a>
+</td>

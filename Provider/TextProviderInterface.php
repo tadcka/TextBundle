@@ -18,7 +18,7 @@ use Tadcka\TextBundle\Model\TextInterface;
  *
  * @since 13.12.17 01.30
  */
-interface ProviderInterface
+interface TextProviderInterface
 {
     /**
      * Find text by id.
@@ -28,6 +28,13 @@ interface ProviderInterface
      * @return null|TextInterface
      */
     public function findText($id);
+
+    /**
+     * Create text.
+     *
+     * @return TextInterface
+     */
+    public function createText();
 
     /**
      * Save text.
@@ -44,12 +51,26 @@ interface ProviderInterface
     public function deleteText(TextInterface $text);
 
     /**
+     * Get text class.
+     *
+     * @return string
+     */
+    public function getTextClass();
+
+    /**
+     * Get text translation class.
+     *
+     * @return string
+     */
+    public function getTextTranslationClass();
+
+    /**
      * Get text by locale.
      *
      * @param string $key
      * @param string $locale
      *
-     * @return null|array
+     * @return null|TextInterface
      */
     public function getText($key, $locale);
 

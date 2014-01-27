@@ -12,8 +12,10 @@
 namespace Tadcka\TextBundle\Form\Factory;
 
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\Test\FormInterface;
 use Tadcka\TextBundle\Form\Type\TextFormType;
 use Tadcka\TextBundle\Model\TextInterface;
+use Tadcka\TextBundle\Provider\TextProviderInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -27,28 +29,22 @@ class TextFormFactory
      */
     private $formFactory;
 
-    /**
-     * @var string
-     */
-    private $textClass;
 
     /**
-     * @var string
+     * @var TextProviderInterface
      */
-    private $textTranslationClass;
+    private $textProvider;
 
     /**
      * Constructor.
      *
      * @param FormFactoryInterface $formFactory
-     * @param string               $textClass
-     * @param string               $textTranslationClass
+     * @param TextProviderInterface $textProvider
      */
-    public function __construct(FormFactoryInterface $formFactory, $textClass, $textTranslationClass)
+    public function __construct(FormFactoryInterface $formFactory, TextProviderInterface $textProvider)
     {
         $this->formFactory = $formFactory;
-        $this->textClass = $textClass;
-        $this->textTranslationClass = $textTranslationClass;
+        $this->textProvider = $textProvider;
     }
 
     /**
@@ -57,19 +53,25 @@ class TextFormFactory
      * @param string $action
      * @param null|TextInterface $data
      *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return FormInterface
      */
     public function create($action, $data = null)
     {
-        return $this->formFactory->create(
+        if (null === $data) {
+            $data = $this->textProvider->createText();
+        }
+
+        $form = $this->formFactory->create(
             new TextFormType(),
             $data,
             array(
                 'method' => 'POST',
                 'action' => $action,
-                'data_class' => $this->textClass,
-                'text_translation_class' => $this->textTranslationClass,
+                'data_class' => $this->textProvider->getTextClass(),
+                'text_translation_class' => $this->textProvider->getTextTranslationClass(),
             )
         );
+
+        return $form;
     }
 }

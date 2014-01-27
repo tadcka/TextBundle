@@ -52,6 +52,13 @@ class TextManager extends BaseTextManager
         $this->class      = $em->getClassMetadata($class)->name;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function findText($id)
+    {
+        return $this->repository->find($id);
+    }
 
     /**
      * {@inheritdoc}
@@ -63,7 +70,7 @@ class TextManager extends BaseTextManager
         $qb->innerJoin('text.translations', 'translation', Join::WITH, $qb->expr()->eq('translation.lang', ':locale'))
             ->setParameter('locale', $locale);
 
-        $qb->andWhere($qb->expr()->eq('text.slug', 'slug'))
+        $qb->andWhere($qb->expr()->eq('text.slug', ':slug'))
             ->setParameter('slug', $slug);
 
         $qb->select('text, translation');
@@ -86,7 +93,7 @@ class TextManager extends BaseTextManager
         }
 
         if (null !== $limit) {
-            $qb->setMaxResults($offset);
+            $qb->setMaxResults($limit);
         }
 
         $qb->select('text, translation');

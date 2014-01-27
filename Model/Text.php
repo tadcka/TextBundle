@@ -29,7 +29,7 @@ abstract class Text implements TextInterface
     protected $slug;
 
     /**
-     * @var array
+     * @var array|TextTranslationInterface[]
      */
     protected $translations = array();
 
@@ -106,5 +106,19 @@ abstract class Text implements TextInterface
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTranslation($locale)
+    {
+        foreach ($this->translations as $translation) {
+            if ($locale === $translation->getLang()) {
+                return $translation;
+            }
+        }
+
+        return null;
     }
 }

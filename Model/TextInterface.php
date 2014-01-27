@@ -90,9 +90,18 @@ interface TextInterface
     /**
      * Set translations.
      *
-     * @param array $translations
+     * @param array|TextTranslationInterface[] $translations
      *
      * @return TextInterface
      */
     public function setTranslations(array $translations);
+
+    /**
+     * Get translation.
+     *
+     * @param string $locale
+     *
+     * @return TextTranslationInterface
+     */
+    public function getTranslation($locale);
 }

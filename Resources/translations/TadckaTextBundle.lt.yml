@@ -4,6 +4,8 @@ list:
 button:
   create_text: Sukurti tekstą
   save: Išsaugoti
+  remove: Pašalinti
+  cancel: Atšaukti
 
 unique_key: Unikalus raktas
 title: Pavadinimas
@@ -12,3 +14,12 @@ content: Turinys
 create:
   title: Sukurti naują tekstą
   success: Sėkmingai sukūrėte naują tekstą!
+
+edit:
+ title: Redaguoti tekstą
+ success: Sėkmingai redagavote tekstą!
+
+remove:
+  title: Pašalinti tekstą
+  success: Sėkmingai pašalintas tekstas!
+  question: Ar tikrai norite pašalinti tekstą: %slug%?
