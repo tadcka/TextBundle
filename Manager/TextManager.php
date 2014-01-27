@@ -59,4 +59,3 @@ class TextManager
         return null;
     }
 }
- 

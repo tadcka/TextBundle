@@ -41,6 +41,8 @@ class DefaultController extends ContainerAware
      */
     public function indexAction(Request $request, $page = 1)
     {
+        $page = $request->get('page', $page);
+
         return $this->getTextAdministratorManager()->all($request, $page);
     }
 

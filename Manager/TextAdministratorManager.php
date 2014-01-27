@@ -314,4 +314,3 @@ class TextAdministratorManager
         return new TextFormHandler($request, $this->session);
     }
 }
- 

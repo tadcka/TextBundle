@@ -1,5 +1,9 @@
 {% trans_default_domain 'TadckaTextBundle' %}
 
+{% if pages is not empty %}
+    {{ pages|raw }}
+{% endif %}
+
 <table class="table">
     <tr>
         <th>{{ 'unique_key'|trans }}</th>
@@ -11,3 +15,7 @@
         </tr>
     {% endfor %}
 </table>
+
+{% if pages is not empty %}
+    {{ pages|raw }}
+{% endif %}
