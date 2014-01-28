@@ -17,7 +17,7 @@ use Tadcka\TextBundle\Model\TextTranslationInterface;
 use Tadcka\TextBundle\ModelManager\TextTranslationManager as BaseTextTranslationManager;
 
 /**
- * @author Tadas Gliaubicas <tadcka89@gmail.lt>
+ * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
  * @since 1/26/14 4:46 PM
  */

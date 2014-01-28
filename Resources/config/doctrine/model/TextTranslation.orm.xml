@@ -16,6 +16,10 @@
 
     <mapped-superclass name="Tadcka\TextBundle\Model\TextTranslation" table="tadcka_text_translation">
 
+        <id name="id" column="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+
         <!--<unique-constraints>-->
             <!--<unique-constraint columns="text_id,lang" name="unique_lang_idx" />-->
         <!--</unique-constraints>-->

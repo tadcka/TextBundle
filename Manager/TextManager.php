@@ -15,7 +15,7 @@ use Tadcka\TextBundle\Provider\TextProviderInterface;
 use Tadcka\TextBundle\TextInformation;
 
 /**
- * @author Tadas Gliaubicas <tadcka89@gmail.lt>
+ * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
  * @since 1/27/14 9:58 PM
  */

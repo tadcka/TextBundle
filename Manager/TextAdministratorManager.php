@@ -29,7 +29,7 @@ use Tadcka\TextBundle\Model\TextInterface;
 use Tadcka\TextBundle\Provider\TextProviderInterface;
 
 /**
- * @author Tadas Gliaubicas <tadcka89@gmail.lt>
+ * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
  * @since 1/27/14 8:55 PM
  */
