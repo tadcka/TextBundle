@@ -9,44 +9,39 @@
  * file that was distributed with this source code.
  */
 
-namespace Tadcka\TextBundle\Manager;
+namespace Tadcka\TextBundle\Provider;
 
-use Tadcka\TextBundle\Provider\TextProviderInterface;
+use Tadcka\TextBundle\ModelManager\TextManagerInterface;
 use Tadcka\TextBundle\TextInformation;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
- * @since 1/27/14 9:58 PM
+ * @since  13.12.17 01.29
  */
-class TextManager 
+class Provider implements ProviderInterface
 {
     /**
-     * @var TextProviderInterface
+     * @var TextManagerInterface
      */
-    private $textProvider;
+    private $textManager;
 
     /**
      * Constructor.
      *
-     * @param TextProviderInterface $textProvider
+     * @param TextManagerInterface $textManager
      */
-    public function __construct(TextProviderInterface $textProvider)
+    public function __construct(TextManagerInterface $textManager)
     {
-        $this->textProvider = $textProvider;
+        $this->textManager = $textManager;
     }
 
     /**
-     * Get text.
-     *
-     * @param string $slug
-     * @param string $locale
-     *
-     * @return null|TextInformation
+     * {@inheritdoc}
      */
     public function getText($slug, $locale)
     {
-        $text = $this->textProvider->getText($slug, $locale);
+        $text = $this->textManager->findTextBySlugAndLocale($slug, $locale);
 
         if (null !== $text) {
             $translation = $text->getTranslation($locale);

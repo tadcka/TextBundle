@@ -55,7 +55,7 @@ class TextManager extends BaseTextManager
     /**
      * {@inheritdoc}
      */
-    public function findText($id)
+    public function find($id)
     {
         return $this->repository->find($id);
     }
@@ -63,7 +63,7 @@ class TextManager extends BaseTextManager
     /**
      * {@inheritdoc}
      */
-    public function getText($slug, $locale)
+    public function findTextBySlugAndLocale($slug, $locale)
     {
         $qb = $this->repository->createQueryBuilder('text');
 
@@ -81,7 +81,7 @@ class TextManager extends BaseTextManager
     /**
      * {@inheritdoc}
      */
-    public function getTexts($locale, $offset = null, $limit = null)
+    public function findManyTextsByLocale($locale, $offset = null, $limit = null)
     {
         $qb = $this->repository->createQueryBuilder('text');
 
@@ -104,7 +104,7 @@ class TextManager extends BaseTextManager
     /**
      * {@inheritdoc}
      */
-    public function getAllTextCount($locale)
+    public function count($locale)
     {
         $qb = $this->repository->createQueryBuilder('text');
 
@@ -119,24 +119,24 @@ class TextManager extends BaseTextManager
     /**
      * {@inheritdoc}
      */
-    public function saveText(TextInterface $text, $flush = false)
+    public function add(TextInterface $text, $save = false)
     {
         $this->em->persist($text);
 
-        if (true === $flush) {
-            $this->em->flush();
+        if (true === $save) {
+            $this->save();
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function deleteText(TextInterface $text, $flush = false)
+    public function delete(TextInterface $text, $save = false)
     {
         $this->em->remove($text);
 
-        if (true === $flush) {
-            $this->em->flush();
+        if (true === $save) {
+            $this->save();
         }
     }
 
@@ -146,6 +146,14 @@ class TextManager extends BaseTextManager
     public function save()
     {
         $this->em->flush();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function clear()
+    {
+        $this->em->clear($this->class);
     }
 
     /**

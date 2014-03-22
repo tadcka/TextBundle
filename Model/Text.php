@@ -111,6 +111,24 @@ abstract class Text implements TextInterface
     /**
      * {@inheritdoc}
      */
+    public function getTranslations()
+    {
+        return $this->translations;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setTranslations(array $translations)
+    {
+        $this->translations = $translations;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getTranslation($locale)
     {
         foreach ($this->translations as $translation) {

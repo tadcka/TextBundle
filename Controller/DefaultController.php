@@ -11,10 +11,19 @@
 
 namespace Tadcka\TextBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Translation\TranslatorInterface;
+use Tadcka\Component\Breadcrumbs\Breadcrumbs;
+use Tadcka\Component\Paginator\Pagination;
+use Tadcka\PaginatorBundle\Manager\PaginatorManager;
+use Tadcka\TextBundle\Form\Factory\TextFormFactory;
+use Tadcka\TextBundle\Form\Handler\TextFormHandler;
+use Tadcka\TextBundle\ModelManager\TextManagerInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -24,11 +33,59 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends ContainerAware
 {
     /**
-     * @return \Tadcka\TextBundle\Manager\TextAdministratorManager
+     * @return EngineInterface
      */
-    private function getTextAdministratorManager()
+    public function getTemplating()
     {
-        return $this->container->get('tadcka_text.manager.text_administrator');
+        return $this->container->get('templating');
+    }
+
+    /**
+     * @return TranslatorInterface
+     */
+    private function getTranslator()
+    {
+        return $this->container->get('translator');
+    }
+
+    /**
+     * @return RouterInterface
+     */
+    private function getRouter()
+    {
+        return $this->container->get('router');
+    }
+
+    /**
+     * @return TextFormFactory
+     */
+    private function getFormFactory()
+    {
+        return $this->container->get('tadcka_text.form_factory.text');
+    }
+
+    /**
+     * @return TextFormHandler
+     */
+    private function getFormHandler()
+    {
+        return $this->container->get('tadcka_text.form_handler.text');
+    }
+
+    /**
+     * @return TextManagerInterface
+     */
+    private function getManager()
+    {
+        return $this->container->get('tadcka_text.manager.text');
+    }
+
+    /**
+     * @return PaginatorManager
+     */
+    private function getPaginatorManager()
+    {
+        return $this->container->get('tadcka_paginator.manager');
     }
 
     /**
@@ -43,7 +100,43 @@ class DefaultController extends ContainerAware
     {
         $page = $request->get('page', $page);
 
-        return $this->getTextAdministratorManager()->all($request, $page);
+        $count = $this->getManager()->count($request->getLocale());
+        $pagination = new Pagination($count, $page, 20);
+
+        if ($page !== $pagination->getCurrentPage()) {
+            $pagination = new Pagination($count, 1, 20);
+        }
+
+        $texts = $this->getManager()->findManyTextsByLocale(
+            $request->getLocale(),
+            $pagination->getOffset(),
+            $pagination->getItemsPerPage()
+        );
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->getTemplating()->renderResponse(
+                'TadckaTextBundle:Default/List:content.html.twig',
+                array(
+                    'pages' => $this->getPaginatorManager()->getPaginatorHtml($pagination),
+                    'texts' => $texts,
+                )
+            );
+        }
+
+        $title = $this->getTranslator()->trans('list.title', array(), 'TadckaTextBundle');
+
+        $breadcrumbs = new Breadcrumbs();
+        $breadcrumbs->add($title);
+
+        return $this->getTemplating()->renderResponse(
+            'TadckaTextBundle:Default/List:list.html.twig',
+            array(
+                'title' => $title,
+                'breadcrumbs' => $breadcrumbs,
+                'pages' => $this->getPaginatorManager()->getPaginatorHtml($pagination),
+                'texts' => $texts,
+            )
+        );
     }
 
     /**
@@ -55,7 +148,33 @@ class DefaultController extends ContainerAware
      */
     public function createAction(Request $request)
     {
-        return $this->getTextAdministratorManager()->create($request);
+        $form = $this->getFormFactory()->create($this->getManager()->create());
+
+        if (true === $this->getFormHandler()->process($request, $form)) {
+
+            $this->getManager()->save();
+            $this->getFormHandler()->onSuccess('create.success');
+
+            return new RedirectResponse($this->getRouter()->generate('tadcka_text_homepage'));
+        }
+
+        $title = $this->getTranslator()->trans('create.title', array(), 'TadckaTextBundle');
+
+        $breadcrumbs = new Breadcrumbs();
+        $breadcrumbs->add(
+            $this->getTranslator()->trans('list.title', array(), 'TadckaTextBundle'),
+            $this->getRouter()->generate('tadcka_text_homepage')
+        );
+        $breadcrumbs->add($title);
+
+        return $this->getTemplating()->renderResponse(
+            'TadckaTextBundle:Default/Action:create.html.twig',
+            array(
+                'title' => $title,
+                'breadcrumbs' => $breadcrumbs,
+                'form' => $form->createView(),
+            )
+        );
     }
 
     /**
@@ -64,11 +183,45 @@ class DefaultController extends ContainerAware
      * @param Request $request
      * @param int $id
      *
+     * @throws \LogicException
+     *
      * @return RedirectResponse|Response
      */
     public function editAction(Request $request, $id)
     {
-        return $this->getTextAdministratorManager()->edit($request, $id);
+        $text = $this->getManager()->find($id);
+
+        if (null === $text) {
+            throw new \LogicException('Text not found.');
+        }
+
+        $form = $this->getFormFactory()->create($text);
+
+        if (true === $this->getFormHandler()->process($request, $form)) {
+
+            $this->getManager()->save();
+            $this->getFormHandler()->onSuccess('edit.success');
+
+            return new RedirectResponse($this->getRouter()->generate('tadcka_text_homepage'));
+        }
+
+        $title = $this->getTranslator()->trans('edit.title', array(), 'TadckaTextBundle');
+
+        $breadcrumbs = new Breadcrumbs();
+        $breadcrumbs->add(
+            $this->getTranslator()->trans('list.title', array(), 'TadckaTextBundle'),
+            $this->getRouter()->generate('tadcka_text_homepage')
+        );
+        $breadcrumbs->add($title);
+
+        return $this->getTemplating()->renderResponse(
+            'TadckaTextBundle:Default/Action:edit.html.twig',
+            array(
+                'title' => $title,
+                'breadcrumbs' => $breadcrumbs,
+                'form' => $form->createView(),
+            )
+        );
     }
 
     /**
@@ -77,10 +230,42 @@ class DefaultController extends ContainerAware
      * @param Request $request
      * @param int $id
      *
+     * @throws \LogicException
+     *
      * @return RedirectResponse|Response
      */
     public function deleteAction(Request $request, $id)
     {
-        return $this->getTextAdministratorManager()->delete($request, $id);
+        $text = $this->getManager()->find($id);
+
+        if (null === $text) {
+            throw new \LogicException('Text not found.');
+        }
+
+        if ($request->isMethod('POST')) {
+
+            $this->getManager()->delete($text, true);
+            $this->container->get('tadcka_text.flash_message')->onSuccess('remove.success');
+
+            return new RedirectResponse($this->getRouter()->generate('tadcka_text_homepage'));
+        }
+
+        $title = $this->getTranslator()->trans('remove.title', array(), 'TadckaTextBundle');
+
+        $breadcrumbs = new Breadcrumbs();
+        $breadcrumbs->add(
+            $this->getTranslator()->trans('list.title', array(), 'TadckaTextBundle'),
+            $this->getRouter()->generate('tadcka_text_homepage')
+        );
+        $breadcrumbs->add($title);
+
+        return $this->getTemplating()->renderResponse(
+            'TadckaTextBundle:Default/Action:delete.html.twig',
+            array(
+                'title' => $title,
+                'breadcrumbs' => $breadcrumbs,
+                'text' => $text,
+            )
+        );
     }
 }

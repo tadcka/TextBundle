@@ -27,20 +27,20 @@ interface TextManagerInterface
      *
      * @return null|TextInterface
      */
-    public function findText($id);
+    public function find($id);
 
     /**
-     * Get text by locale.
+     * Find text by slug and locale.
      *
      * @param string $slug
      * @param string $locale
      *
-     * @return null|array
+     * @return null|TextInterface
      */
-    public function getText($slug, $locale);
+    public function findTextBySlugAndLocale($slug, $locale);
 
     /**
-     * Get texts.
+     * Find many texts by locale.
      *
      * @param string $locale
      * @param null|int $offset
@@ -48,7 +48,7 @@ interface TextManagerInterface
      *
      * @return array
      */
-    public function getTexts($locale, $offset = null, $limit = null);
+    public function findManyTextsByLocale($locale, $offset = null, $limit = null);
 
     /**
      * Get count.
@@ -57,35 +57,40 @@ interface TextManagerInterface
      *
      * @return int
      */
-    public function getAllTextCount($locale);
+    public function count($locale);
 
     /**
      * Create text.
      *
      * @return TextInterface
      */
-    public function createText();
+    public function create();
 
     /**
      * Save text.
      *
      * @param TextInterface $text
-     * @param bool $flush
+     * @param bool $save
      */
-    public function saveText(TextInterface $text, $flush = false);
+    public function add(TextInterface $text, $save = false);
 
     /**
      * Delete text.
      *
      * @param TextInterface $text
-     * @param bool $flush
+     * @param bool $save
      */
-    public function deleteText(TextInterface $text, $flush = false);
+    public function delete(TextInterface $text, $save = false);
 
     /**
-     * Save.
+     * Save persisted layer.
      */
     public function save();
+
+    /**
+     * Clear persisted layer.
+     */
+    public function clear();
 
     /**
      * Get class text model.

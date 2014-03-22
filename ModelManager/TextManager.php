@@ -21,11 +21,9 @@ use Tadcka\TextBundle\Model\TextInterface;
 abstract class TextManager implements TextManagerInterface
 {
     /**
-     * Create text.
-     *
-     * @return TextInterface
+     * {@inheritdoc}
      */
-    public function createText()
+    public function create()
     {
         $class = $this->getClass();
         $text = new $class;

@@ -15,19 +15,16 @@
 
     <parameters>
         <parameter key="tadcka_text.manager.text.default.class">Tadcka\TextBundle\Doctrine\EntityManager\TextManager</parameter>
-        <parameter key="tadcka_text.manager.text_translation.default.class">Tadcka\TextBundle\Doctrine\EntityManager\TextTranslationManager</parameter>
     </parameters>
 
     <services>
-        <service id="tadcka_text.manager.text.default" class="%tadcka_text.manager.text.default.class%" public="false">
+
+        <!--Text manager-->
+        <service id="tadcka_text.manager.text.default" class="%tadcka_text.manager.text.default.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
-            <argument>%tadcka_text.text_class%</argument>
+            <argument>%tadcka_text.model.text.class%</argument>
         </service>
 
-        <service id="tadcka_text.manager.text_translation.default" class="%tadcka_text.manager.text_translation.default.class%" public="false">
-            <argument type="service" id="doctrine.orm.entity_manager" />
-            <argument>%tadcka_text.text_translation_class%</argument>
-        </service>
     </services>
 
 </container>

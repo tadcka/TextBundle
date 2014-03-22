@@ -13,8 +13,8 @@ namespace Tadcka\TextBundle\Form\Handler;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Tadcka\TextBundle\Model\TextInterface;
+use Tadcka\TextBundle\Message\FlashMessageInterface;
+use Tadcka\TextBundle\ModelManager\TextManagerInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -24,42 +24,43 @@ use Tadcka\TextBundle\Model\TextInterface;
 class TextFormHandler
 {
     /**
-     * @var Request
+     * @var TextManagerInterface
      */
-    private $request;
+    private $textManager;
 
     /**
-     * @var SessionInterface
+     * @var FlashMessageInterface
      */
-    private $session;
+    private $flashMessage;
 
     /**
      * Constructor.
      *
-     * @param Request $request
-     * @param SessionInterface $session
+     * @param TextManagerInterface $textManager
+     * @param FlashMessageInterface $flashMessage
      */
-    public function __construct(Request $request, SessionInterface $session)
+    public function __construct(TextManagerInterface $textManager, FlashMessageInterface $flashMessage)
     {
-        $this->request = $request;
-        $this->session = $session;
+        $this->textManager = $textManager;
+        $this->flashMessage = $flashMessage;
     }
 
     /**
-     * Process.
+     * Process text.
      *
+     * @param Request $request
      * @param FormInterface $form
      *
-     * @return bool|TextInterface
+     * @return bool
      */
-    public function process(FormInterface $form)
+    public function process(Request $request, FormInterface $form)
     {
-        if (true === $this->request->isMethod('POST')) {
-            $form->submit($this->request);
+        if ($request->isMethod('POST')) {
+            $form->submit($request);
             if ($form->isValid()) {
-                $text = $form->getData();
+                $this->textManager->add($form->getData());
 
-                return $text;
+                return true;
             }
         }
 
@@ -69,10 +70,10 @@ class TextFormHandler
     /**
      * On success.
      *
-     * @param string $message
+     * @param string $translationId
      */
-    public function onSuccess($message)
+    public function onSuccess($translationId)
     {
-        $this->session->getFlashBag()->set('flash_notices', array('success' => array($message)));
+        $this->flashMessage->onSuccess($translationId);
     }
 }

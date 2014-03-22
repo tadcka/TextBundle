@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+
+<!--
+ This file is part of the Tadcka package.
+
+ (c) Tadcka <tadcka89@gmail.com>
+
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+-->
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="tadcka_text.form_factory.text.class">Tadcka\TextBundle\Form\Factory\TextFormFactory</parameter>
+        <parameter key="tadcka_text.form_handler.text.class">Tadcka\TextBundle\Form\Handler\TextFormHandler</parameter>
+    </parameters>
+
+    <services>
+
+        <!--Text form factory-->
+        <service id="tadcka_text.form_factory.text" class="%tadcka_text.form_factory.text.class%">
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="router" />
+            <argument>%tadcka_text.model.text.class%</argument>
+            <argument>%tadcka_text.model.text_translation.class%</argument>
+        </service>
+
+        <!--Text form handler-->
+        <service id="tadcka_text.form_handler.text" class="%tadcka_text.form_handler.text.class%">
+            <argument type="service" id="tadcka_text.manager.text" />
+            <argument type="service" id="tadcka_text.flash_message" />
+        </service>
+
+    </services>
+</container>

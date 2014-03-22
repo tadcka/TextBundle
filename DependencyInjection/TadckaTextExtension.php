@@ -31,15 +31,24 @@ class TadckaTextExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
+        $loader->load('form/text.xml');
 
         if (!in_array(strtolower($config['db_driver']), array('mongodb', 'orm'))) {
             throw new \InvalidArgumentException(sprintf('Invalid db driver "%s".', $config['db_driver']));
         }
         $loader->load('db_driver/' . sprintf('%s.xml', $config['db_driver']));
 
-        $container->setParameter('tadcka_text.text_class', $config['class']['model']['text']);
-        $container->setParameter('tadcka_text.text_translation_class', $config['class']['model']['text_translation']);
+        $container->setParameter(
+            'tadcka_text.model.text.class',
+            $config['class']['model']['text']
+        );
+        $container->setParameter(
+            'tadcka_text.model.text_translation.class',
+            $config['class']['model']['text_translation']
+        );
+
+        $container->setAlias('tadcka_text.manager.text', $config['text_manager']);
     }
 }
