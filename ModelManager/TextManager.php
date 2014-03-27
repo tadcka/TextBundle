@@ -11,8 +11,6 @@
 
 namespace Tadcka\TextBundle\ModelManager;
 
-use Tadcka\TextBundle\Model\TextInterface;
-
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *

@@ -14,13 +14,13 @@
 	"minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony" : ">=2.3",
+        "symfony/framework-bundle" : ">=2.3",
 
-        "tadcka/breadcrumbs": ">=v1.0.0",
-        "tadcka/paginator": ">=v1.0.0",
-        "tadcka/paginator-bundle": "dev-master",
+        "tadcka/breadcrumbs": "~1.0",
+        "tadcka/paginator": "~1.0",
+        "tadcka/paginator-bundle": "~0.1",
         "nercury/translation-editor-bundle": "0.1.x-dev",
-        "Trsteel/ckeditor-bundle": ">=v1.2.0"
+        "Trsteel/ckeditor-bundle": ">=1.2.0"
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "*"

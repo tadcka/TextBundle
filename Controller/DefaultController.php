@@ -35,7 +35,7 @@ class DefaultController extends ContainerAware
     /**
      * @return EngineInterface
      */
-    public function getTemplating()
+    private function getTemplating()
     {
         return $this->container->get('templating');
     }
