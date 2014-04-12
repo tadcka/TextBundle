@@ -1,6 +1,8 @@
 TextBundle
 ==========
 
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/tadcka/TextBundle/badges/quality-score.png?s=421227ce87b33b44a643b90cdde23e53421bd6af)](https://scrutinizer-ci.com/g/tadcka/TextBundle/)
+
 Localized texts manager.
 
 ## Installation
