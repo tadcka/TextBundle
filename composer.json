@@ -19,7 +19,7 @@
         "tadcka/breadcrumbs": "~1.0",
         "tadcka/paginator-bundle": "~0.1",
         "nercury/translation-editor-bundle": "0.1.x-dev",
-        "Trsteel/ckeditor-bundle": ">=1.2.0"
+        "Trsteel/ckeditor-bundle": "~1.2"
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "*"
