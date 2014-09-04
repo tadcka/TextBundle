@@ -32,6 +32,7 @@ class TextFormType extends AbstractType
         $builder->add('slug', 'text', array(
             'label' => 'unique_key',
             'constraints' => array(new NotBlank()),
+            'required' => false,
         ));
 
         $builder->add('translations', 'translations', array(
