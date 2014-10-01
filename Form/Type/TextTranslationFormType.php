@@ -14,6 +14,7 @@ namespace Tadcka\TextBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -23,21 +24,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class TextTranslationFormType extends AbstractType
 {
     /**
-     * @var string
-     */
-    private $dataClass;
-
-    /**
-     * Constructor.
-     *
-     * @param string $dataClass
-     */
-    public function __construct($dataClass)
-    {
-        $this->dataClass = $dataClass;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -45,6 +31,7 @@ class TextTranslationFormType extends AbstractType
         $builder->add('title', 'text', array(
             'label' => 'title',
             'required' => false,
+            'constraints' => array(new NotBlank()),
         ));
 
         $builder->add('content', 'ckeditor', array(
@@ -60,19 +47,16 @@ class TextTranslationFormType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => $this->dataClass,
                 'translation_domain' => 'TadckaTextBundle',
             )
         );
     }
 
     /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
+     * {@inheritdoc}
      */
     public function getName()
     {
-        return 'text_translation';
+        return 'tadcka_text_translation';
     }
 }

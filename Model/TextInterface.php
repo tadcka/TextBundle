@@ -83,7 +83,7 @@ interface TextInterface
     /**
      * Get translations.
      *
-     * @return array
+     * @return array|TextTranslationInterface[]
      */
     public function getTranslations();
 

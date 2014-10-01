@@ -14,6 +14,7 @@ namespace Tadcka\TextBundle\Form\Handler;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Tadcka\TextBundle\Message\FlashMessageInterface;
+use Tadcka\TextBundle\Model\TextInterface;
 use Tadcka\TextBundle\ModelManager\TextManagerInterface;
 
 /**
@@ -58,6 +59,11 @@ class TextFormHandler
         if ($request->isMethod('POST')) {
             $form->submit($request);
             if ($form->isValid()) {
+                /** @var TextInterface $text */
+                $text = $form->getData();
+                foreach ($text->getTranslations() as $translation) {
+                    $translation->setText($text);
+                }
                 $this->textManager->add($form->getData());
 
                 return true;

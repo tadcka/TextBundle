@@ -29,15 +29,10 @@ class TextFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('slug', 'text', array(
-            'label' => 'unique_key',
-            'constraints' => array(new NotBlank()),
-            'required' => false,
-        ));
-
         $builder->add('translations', 'translations', array(
-            'type' => new TextTranslationFormType($options['text_translation_class']),
+            'type' => new TextTranslationFormType(),
             'label' => false,
+            'options' => array('data_class' => $options['text_translation_class']),
         ));
 
         $builder->add('submit', 'submit', array(
@@ -50,22 +45,20 @@ class TextFormType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        $resolver->setOptional(array('text_translation_class'));
+
         $resolver->setDefaults(
             array(
                 'translation_domain' => 'TadckaTextBundle',
-                'constraints' => array(new UniqueEntity(array('fields' => array('slug'), 'errorPath' => 'slug'))),
-                'text_translation_class' => null,
             )
         );
     }
 
     /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
+     * {@inheritdoc}
      */
     public function getName()
     {
-        return 'text';
+        return 'tadcka_text';
     }
 }
